@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: product-service
+    data:
+        mongodb:
+            database: productdb
+            # host:
+            # port: 27017
+            # username: 
+            # password: 
+de.flapdoodle.mongodb.embedded.version: 4.4.1
+
+server:
+  port: 8091
