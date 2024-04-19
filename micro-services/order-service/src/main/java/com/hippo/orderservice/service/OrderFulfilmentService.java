@@ -1,5 +1,6 @@
 package com.hippo.orderservice.service;
 
+import java.time.Duration;
 import org.springframework.stereotype.Service;
 import com.hippo.orderservice.client.ProductServicesClient;
 import com.hippo.orderservice.client.UserServiceClient;
@@ -11,6 +12,7 @@ import com.hippo.orderservice.util.EntityDtoUtil;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +39,8 @@ public class OrderFulfilmentService {
     
     private Mono<OrderRequestContext> productRequest(OrderRequestContext r) {
         return productServicesClient.getProductById(r.getOrderRequestDto().getProductId())
+                // .retry(5) //this will simply re-try upon failure
+        .retryWhen(Retry.fixedDelay(5, Duration.ofSeconds(1)))
                 .doOnNext(p -> r.setProductDto(p)).thenReturn(r);
     }
 

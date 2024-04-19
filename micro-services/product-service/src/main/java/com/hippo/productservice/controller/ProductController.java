@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.hippo.productservice.models.ProductDto;
 import com.hippo.productservice.service.ProductService;
+import io.netty.util.internal.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -39,6 +40,7 @@ public class ProductController {
 
     @GetMapping("{id}")
     public Mono<ResponseEntity<ProductDto>> getProductById(@PathVariable("id") String id) {
+        simulateRandomException();
         return productService.getProductById(id).map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
@@ -64,6 +66,12 @@ public class ProductController {
     public Flux<ProductDto>  getProductByPriceRange(@RequestParam("min") Integer min,
             @RequestParam("max") Integer max) {
         return productService.getProductByPriceRange(min, max);
+    }
+
+    private void simulateRandomException() {
+        if (ThreadLocalRandom.current().nextBoolean()) { // Explore this Netty ThreadLocalRandom class functions
+            throw new RuntimeException("Something went wrong in product service");
+        }
     }
 
 }

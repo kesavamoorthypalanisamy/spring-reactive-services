@@ -16,12 +16,14 @@ public class DataSetUpServiceOnStartup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Product product1 = new Product("endurance RoadBike Aluminium shimano tiagra", 1200);
-        Product product2 = new Product("Mountain bike hardtail Fox sram Eagle 1x12", 1500);
+        Product product1 = new Product("endurance RoadBike Aluminium shimano tiagra", 400);
+        Product product2 = new Product("Mountain bike hardtail Fox sram Eagle 1x12", 700);
         Product product3 = new Product("Trekking bike Rolhoff and son dynamo", 2200);
         Product product4 = new Product("Trekking bike Pinion and son dynamo", 3200);
+        Product product5 = new Product("RD shimano mountain Long gauge 10speed", 20);
+        Product product6 = new Product("ChaniRing shimano HG road 50T", 40);
 
-        Flux.just(product1, product2, product3, product4).flatMap(productRepository::insert)
+        Flux.just(product1, product2, product3, product4,product5,product6).flatMap(productRepository::insert)
                 .map(DataMapperUtil::entityToDto).subscribe(System.out::println);
     }
 
