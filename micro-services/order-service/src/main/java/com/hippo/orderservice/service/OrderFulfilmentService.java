@@ -29,7 +29,7 @@ public class OrderFulfilmentService {
      */
     public Mono<OrderResponseDto> processOrder(Mono<OrderRequestDto> requestMono) {
         return requestMono.map(r -> new OrderRequestContext(r)).flatMap(this::productRequest)
-                .doOnNext(EntityDtoUtil::toTransactionRequestDto).doOnNext(System.out::println)
+                .doOnNext(EntityDtoUtil::toTransactionRequestDto).doOnNext(System.out::println) //doOnNext will not change the pipelne nextline output like map
                 .flatMap(this::doTransaction).map(EntityDtoUtil::toOrder).map(orderRepository::save) //Blocking DB call
                 .map(EntityDtoUtil::toOrderResponseDto).subscribeOn(Schedulers.boundedElastic()); //this subscribe is very importent if there is any blocking actionin the pipeline.
         //Explore about publishOn() use also.
