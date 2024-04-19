@@ -12,4 +12,4 @@ CREATE TABLE user_transaction(
     FOREIGN KEY (user_id) REFERENCES users(id) on delete cascade
 );
 
-INSERT INTO users (name,balance) values ('sam',1000),('mike',1200),('vijay',800),('gopi',2000);
+INSERT INTO users (name,balance) values ('sam',3400),('mike',2200),('vijay',8800),('gopi',9000);

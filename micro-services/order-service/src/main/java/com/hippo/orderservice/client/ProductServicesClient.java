@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import com.hippo.orderservice.models.ProductDto;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -16,6 +17,10 @@ public class ProductServicesClient {
 
     public Mono<ProductDto> getProductById(final String prodcutId) {
         return webClient.get().uri("{id}", prodcutId).retrieve().bodyToMono(ProductDto.class);
+    }
+
+    public Flux<ProductDto> getAllProducts() {
+        return webClient.get().uri("all").retrieve().bodyToFlux(ProductDto.class);
     }
 
 }

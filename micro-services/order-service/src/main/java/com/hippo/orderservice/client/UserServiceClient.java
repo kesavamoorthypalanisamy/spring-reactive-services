@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import com.hippo.orderservice.models.TransactionRequestDto;
 import com.hippo.orderservice.models.TransactionResponseDto;
+import com.hippo.orderservice.models.UserDto;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -16,10 +18,12 @@ public class UserServiceClient {
     }
     
     public Mono<TransactionResponseDto> createTransaction(TransactionRequestDto requestDto) {
-        return webClient.post().uri("transaction")
-                .bodyValue(requestDto)
-                .retrieve()
+        return webClient.post().uri("transaction").bodyValue(requestDto).retrieve()
                 .bodyToMono(TransactionResponseDto.class);
+    }
+    
+    public Flux<UserDto> getAllUsers() {
+        return webClient.get().uri("all").retrieve().bodyToFlux(UserDto.class);
     }
     
 }
