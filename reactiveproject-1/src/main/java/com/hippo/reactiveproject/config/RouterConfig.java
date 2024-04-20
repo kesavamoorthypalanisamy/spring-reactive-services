@@ -49,6 +49,9 @@ public class RouterConfig {
                 .build();
     }*/
 
+    /*
+     * This is equvilant to Controller advice
+     */
     private BiFunction<InputValidationException, ServerRequest, Mono<ServerResponse>> validationExceptionhamndler() {
         return (ex, req) -> {
         InputFailedValidationResponse inputFailedValidationResponse =
