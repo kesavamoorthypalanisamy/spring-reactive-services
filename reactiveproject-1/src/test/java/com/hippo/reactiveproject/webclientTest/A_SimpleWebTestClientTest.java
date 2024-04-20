@@ -28,8 +28,10 @@ public class A_SimpleWebTestClientTest {
 
     @Test
     public void reactiveMathFluentAssertionTest() {
-        webClient.get().uri("/math/reactive/square/{input}", 5).exchange().expectHeader()
-                .contentType(MediaType.APPLICATION_JSON).expectBody(CustomResponse.class)
+        webClient.get().uri("/math/reactive/square/{input}", 5).exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(CustomResponse.class)
                 // .isEqualTo(null) --> like this also can be used
                 .value(v -> Assertions.assertThat(v.getOutputValue()).isEqualTo(25));
     }
