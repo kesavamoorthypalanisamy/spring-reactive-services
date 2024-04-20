@@ -20,7 +20,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @WebFluxTest(ReactiveMathController.class)
-public class B_ControllerGetTestUsingFluxTest {
+public class B_ReactiveMathControllerTest {
 
     @Autowired
     private WebTestClient webClient;
